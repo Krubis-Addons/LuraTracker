@@ -1,0 +1,16 @@
+## Interface: 120001
+## Title: LuraTracker
+## Notes: Show the order of L'uras Death's Dirge ability
+## Author: Orry
+## Version: 1.0
+## SavedVariables: LuraTrackerDB
+
+Core/core.lua
+Core/logic.lua
+Core/comm.lua
+
+Settings/settings.lua
+
+UI/buttons.lua
+UI/drag.lua
+UI/ui.lua
