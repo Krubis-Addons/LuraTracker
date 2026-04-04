@@ -9,7 +9,7 @@ function LuraTracker:InitCommunication()
         if prefix ~= "LURA" then return end
 
         -- Prevent reacting to own messages
-        --if sender == UnitName("player") then return end
+        if sender == UnitName("player") then return end
 
         LuraTracker:ReceiveSequence(message)
     end)
@@ -48,6 +48,11 @@ end
 function LuraTracker:SendSequence()
     if not IsInGroup() then return end
 
+    -- Only send if 5 clicks have been made
+    if not self.clickOrder or #self.clickOrder < 5 then
+        return
+    end
+
     local channel = IsInRaid() and "RAID" or "PARTY"
     local ids = {}
 
@@ -61,6 +66,11 @@ end
 
 -- Testing
 function LuraTracker:SendTestMessage()
+    -- Only send if 5 clicks have been made
+    if not self.clickOrder or #self.clickOrder < 5 then
+        return
+    end
+
     local ids = {}
 
     for i, entry in ipairs(self.clickOrder) do

@@ -46,4 +46,34 @@ function LuraTracker:UpdateDisplay()
     else
         self.displayFrame:Hide()
     end
+
+    -- update radar
+    self:UpdateRadar()
+end
+
+-- Call this function whenever a button is clicked
+function LuraTracker:StartAutoResetTimer()
+    -- Cancel existing timer if any
+    if self.autoResetTimer then
+        self.autoResetTimer:Cancel()
+    end
+
+    -- Start new timer
+    self.autoResetTimer = C_Timer.NewTimer(15, function()
+        -- Clear click order
+        self.clickOrder = {}
+
+        -- Hide Display Frame
+        if self.displayFrame then
+            self.displayFrame:Hide()
+        end
+
+        -- Hide Radar Frame
+        if self.radarFrame then
+            self.radarFrame:Hide()
+        end
+
+        -- Optionally update main UI if needed
+        self:UpdateDisplay()
+    end)
 end

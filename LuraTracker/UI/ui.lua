@@ -1,7 +1,7 @@
 function LuraTracker:CreateMainFrame()
     local frame = CreateFrame("Frame", "LuraTrackerFrame", UIParent, "BackdropTemplate")
     frame:SetSize(300, 200)
-    frame:SetPoint("LEFT", 200, 0)
+    frame:SetPoint("LEFT", 200, -150)
     frame:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background"
     })
@@ -11,26 +11,17 @@ function LuraTracker:CreateMainFrame()
 
     -- Restore saved position
     if LuraTrackerDB and LuraTrackerDB.mainFrame then
-    local pos = LuraTrackerDB.mainFrame
-    if pos.point and pos.relativePoint and pos.x and pos.y then
-        LuraTracker.frame:ClearAllPoints()
-        LuraTracker.frame:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y)
+        local pos = LuraTrackerDB.mainFrame
+        if pos.point and pos.relativePoint and pos.x and pos.y then
+            LuraTracker.frame:ClearAllPoints()
+            LuraTracker.frame:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y)
+        end
     end
-
-    -- Close Button (top right)
-    local closeBtn = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    closeBtn:SetPoint("TOPRIGHT", -5, -5)
-
-    closeBtn:SetScript("OnClick", function()
-    frame:Hide()
-
-    if LuraTracker.displayFrame then
-        LuraTracker.displayFrame:Hide()
-    end
-
-    print("|cffff0000LuraTracker hidden.|r Use |cffffff00/lt|r to show it again.")
-end)
-end
+    
+    LuraTracker:CreateImageButtons()
+    LuraTracker:CreateResetButton()
+    LuraTracker:CreateSettingsButton()
+    LuraTracker:CreateCloseButton()
 
     self:UpdateDisplay()
 end
@@ -48,14 +39,24 @@ function LuraTracker:CreateDisplayFrame()
 
     -- Restore saved position
     if LuraTrackerDB and LuraTrackerDB.displayFrame then
-    local pos = LuraTrackerDB.displayFrame
-    if pos.point and pos.relativePoint and pos.x and pos.y then
-        LuraTracker.displayFrame:ClearAllPoints()
-        LuraTracker.displayFrame:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y)
+        local pos = LuraTrackerDB.displayFrame
+        if pos.point and pos.relativePoint and pos.x and pos.y then
+            LuraTracker.displayFrame:ClearAllPoints()
+            LuraTracker.displayFrame:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y)
+        end
     end
-end
 
     frame:Hide()
+end
+
+function LuraTracker:CreateCloseButton()
+    -- Close Button (top right)
+    local closeBtn = CreateFrame("Button", nil, self.frame, "UIPanelCloseButton")
+    closeBtn:SetPoint("TOPRIGHT", -5, -5)
+
+    closeBtn:SetScript("OnClick", function()
+        LuraTracker:ToggleUI()
+    end)
 end
 
 function LuraTracker:CreateSettingsButton()

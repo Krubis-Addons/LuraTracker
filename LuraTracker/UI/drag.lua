@@ -11,6 +11,7 @@ function LuraTracker:UpdateLockButton()
             self.displayFrame:SetBackdropBorderColor(0, 0, 0, 0.8)
         end
         self.displayFrame:Hide()
+        self.radarFrame:Hide()
         self.lockButton:SetText("Unlock")
     else
         -- Unlock
@@ -24,6 +25,8 @@ function LuraTracker:UpdateLockButton()
         end
         self.displayFrame:Show()
         self:EnableDrag(self.displayFrame, "displayFrame")
+        self.radarFrame:Show()
+        self:EnableDrag(self.radarFrame, "radarFrame")
 
         self.lockButton:SetText("Lock")
     end

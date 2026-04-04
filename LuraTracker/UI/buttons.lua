@@ -31,6 +31,11 @@ function LuraTracker:CreateImageButtons()
                 self:SendSequence()
                 --self:SendTestMessage()
             end
+
+            if #self.clickOrder == 5 then
+                -- Start or restart the 15-second auto reset timer
+                self:StartAutoResetTimer()
+            end
         end)
 
         table.insert(self.imageButtons, btn)
