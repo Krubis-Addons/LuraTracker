@@ -17,6 +17,9 @@ end
 
 -- Recieve data
 function LuraTracker:ReceiveSequence(message)
+    print("recieve message")
+    print(message)
+
     -- Reset case (empty message)
     if message == "" then
         wipe(self.clickOrder)
@@ -60,6 +63,8 @@ function LuraTracker:SendSequence()
         table.insert(ids, entry.id)  -- extract only ID
     end
 
+    print("Send sequence")
+    print(msg)
     local msg = table.concat(ids, ",")
     C_ChatInfo.SendAddonMessage("LURA", msg, channel)
 end
